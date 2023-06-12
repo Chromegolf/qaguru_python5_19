@@ -1,6 +1,6 @@
 import json
 import requests
-from config import BASE_URL, USER_EMAIL, USER_PASSWORD, JOB_LIST, USER_ID
+from config import BASE_URL, USER_EMAIL, USER_PASSWORD, USER_ID, JobList
 from requests import Response
 
 
@@ -35,11 +35,11 @@ def test_unsuccess_login():
 def test_assign_user_on_job():
     request_json = {
         "name": USER_EMAIL,
-        "job": JOB_LIST[0]
+        "job": json.dumps(JobList.manager)
     }
     send_reg_req: Response = requests.post(BASE_URL + 'user', json=request_json)
     assert send_reg_req.status_code == 201
-    assert send_reg_req.json()['job'] == JOB_LIST[0]
+    assert send_reg_req.json()['job'] == json.dumps(JobList.manager)
 
 
 def test_get_user_list():
